@@ -3,7 +3,6 @@ package wapsnmp
 
 import (
 	"fmt"
-	"log"
 	"math/rand"
 	"net"
 	"reflect"
@@ -59,23 +58,23 @@ func poll(conn net.Conn, toSend []byte, respondBuffer []byte, retries int, timeo
 		deadline := time.Now().Add(timeout)
 
 		if err = conn.SetWriteDeadline(deadline); err != nil {
-			log.Printf("Couldn't set write deadline. Retrying. Retry %d/%d\n", i, retries)
+			//log.Printf("Couldn't set write deadline. Retrying. Retry %d/%d\n", i, retries)
 			continue
 		}
 		if _, err = conn.Write(toSend); err != nil {
-			log.Printf("Couldn't write. Retrying. Retry %d/%d\n", i, retries)
+			//log.Printf("Couldn't write. Retrying. Retry %d/%d\n", i, retries)
 			continue
 		}
 
 		deadline = time.Now().Add(timeout)
 		if err = conn.SetReadDeadline(deadline); err != nil {
-			log.Printf("Couldn't set read deadline. Retrying. Retry %d/%d\n", i, retries)
+			//log.Printf("Couldn't set read deadline. Retrying. Retry %d/%d\n", i, retries)
 			continue
 		}
 
 		numRead := 0
 		if numRead, err = conn.Read(respondBuffer); err != nil {
-			log.Printf("Couldn't read. Retrying. Retry %d/%d\n", i, retries)
+			//log.Printf("Couldn't read. Retrying. Retry %d/%d\n", i, retries)
 			continue
 		}
 
